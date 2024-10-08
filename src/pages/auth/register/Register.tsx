@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { Status } from "../../../globals/types/types"
 
-
 const Register = () => {
   const {status} = useAppSelector((state)=>state.auth)
   console.log(status)
@@ -26,5 +25,4 @@ const Register = () => {
    <Form type='register' onSubmit={handleRegister}/>
   )
 }
-
 export default Register

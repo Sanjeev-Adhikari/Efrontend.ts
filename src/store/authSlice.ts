@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import API from '../http'
+import {API} from '../http'
 import { Status } from '../globals/types/types'
 
 interface User{
@@ -66,8 +66,9 @@ export function register(data:RegisterUser){
         try {
             const response = await API.post("register", data)
             if(response.status === 200){
+                
                 dispatch(setStatus(Status.SUCCESS))
-                // dispatch(setUser(response.data))
+               
             }else{
                 dispatch(setStatus(Status.ERROR))
             }

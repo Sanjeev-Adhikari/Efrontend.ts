@@ -10,7 +10,7 @@ export interface Product{
     createdAt: string,
     categoryId: string,
     user: User
-    category: Category        
+    Category: Category        
 }
 
 interface User{
@@ -22,7 +22,7 @@ interface User{
 
 interface Category{
     id: string,
-    categoryNam: string
+    categoryName: string
 }
 
 export interface ProductState{

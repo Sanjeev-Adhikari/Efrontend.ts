@@ -1,24 +1,34 @@
 import { Link, useNavigate } from "react-router-dom"
-import {  useAppSelector } from "../../../store/hooks"
+import {  useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { useEffect, useState } from "react"
+import { fetchCartItems } from "../../../store/cartSlice"
+import { setLogout } from "../../../store/authSlice"
 
 
 const Navbar = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const {user} = useAppSelector((state)=>state.auth)
+  const {status,user} = useAppSelector((state)=>state.auth)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+
+  const {items} = useAppSelector((state)=>state.carts)
 
   useEffect(()=>{
     const token = localStorage.getItem('token')
     setIsLoggedIn(!!token || !!user.token)
+    dispatch(fetchCartItems())
   },[user.token])
  
   const handleLogout= ()=>{
     localStorage.removeItem('token')
     setIsLoggedIn(false)
     navigate('/login')
-
+   
+    dispatch(setLogout())
   }
+  
+
+
   return (
    <>
    {/* Main Header */}
@@ -54,6 +64,19 @@ const Navbar = () => {
             </Link>
               </>
             ) : (
+              <>
+               <Link
+              to='/myorders'
+              className="text-xl font-semibold text-blue-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+            >
+              <span>My Orders</span>
+            </Link>
+             <Link
+              to='/cart'
+              className="text-xl font-semibold text-blue-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+            >
+              <span>Cart<sup>{items?.length}</sup></span>
+            </Link>
               <button
               onClick={handleLogout}
               type="button"
@@ -61,6 +84,7 @@ const Navbar = () => {
             >
               <span>Logout</span>
             </button>
+              </>
             )
            }
            

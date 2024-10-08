@@ -158,8 +158,7 @@ const handleSubmit = (e:FormEvent<HTMLFormElement>)=>{
                   Login
                 </Link>
               </div>
-              )
-              
+              )            
         }
               
             </div>

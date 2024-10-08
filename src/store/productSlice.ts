@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product, ProductState } from "../globals/types/productType";
 import { Status } from "../globals/types/types";
-import API from "../http";
+import {API} from "../http";
 import { AppDispatch, RootState } from "./store";
 
 
@@ -39,6 +39,7 @@ export function getProducts(){
                 const {data} = response.data
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(setProduct(data))
+                dispatch(setStatus(Status.LOADING))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
@@ -59,9 +60,7 @@ export function getProductById(productId : string){
       }
         dispatch(setStatus(Status.LOADING))
         try {
-            
-            const response = await API.get(`product/${productId}`)
-           
+            const response = await API.get(`product/${productId}`)    
             if(response.status === 200){
                 const {data} = response.data
                 dispatch(setStatus(Status.SUCCESS))
